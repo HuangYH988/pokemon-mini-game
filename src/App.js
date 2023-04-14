@@ -23,7 +23,7 @@ class App extends React.Component {
       // State to track the score of each player
       scoreboard: [0, 0],
       //Switch attack and defend
-      p1Atk: null,
+      p1Atk: true,
       roundNum: 0,
     };
   }
@@ -86,6 +86,7 @@ class App extends React.Component {
       }
     }
     this.setState({ scoreboard });
+    this.changeP1Atk();
   };
 
   dealType = () => {
@@ -133,7 +134,7 @@ class App extends React.Component {
   };
 
   dealCards = () => {
-    this.changeAtkDef();
+    
     const { p1Atk } = this.state;
     this.rN++;
     // this.state.cardDeck.pop() modifies this.state.cardDeck array
@@ -180,18 +181,21 @@ class App extends React.Component {
   restartGame = () => {
     this.rN = 0;
     this.setState({
-      cardDeck: makeShuffledDeck(),
+      cardDeck: makeDeck(),
       cardDeck2: makeShuffledDeck(),
       currAtk: [],
       currDef: [],
       currWinner: null,
       scoreboard: [0, 0],
-      p1Atk: null,
+      p1Atk: true,
       roundNum: 0,
       gameStart: false,
     });
   };
-  
+  changeP1Atk = () => {
+    const { p1Atk } = this.state;
+    p1Atk ? this.setState({ p1Atk: false }) : this.setState({ p1Atk: true });
+  };
 
   typeMatchUpChart = [
     /*typeless, Normal","Fighting","Psychic","Dark","Ghost","Bug","Dragon",
@@ -226,36 +230,31 @@ class App extends React.Component {
       // Give each list element a unique key
       type ? (
         p1Atk ? (
-          <div key={`${type}1`}>Player1 used {type} type attack</div>
-        ) : (
           <div key={`${type}1`}>Player2 used {type} type attack</div>
+        ) : (
+          <div key={`${type}1`}>Player1 used {type} type attack</div>
         )
       ) : p1Atk ? (
-        <div key={`typeless1`}>Player1 used Typeless attack</div>
-      ) : (
         <div key={`typeless1`}>Player2 used Typeless attack</div>
+      ) : (
+        <div key={`typeless1`}>Player1 used Typeless attack</div>
       )
     );
     const currDefElems = this.state.currDef.map(({ type }) =>
       // Give each list element a unique key
       type ? (
         !this.state.p1Atk ? (
-          <div key={`${type}2`}>against Player1's {type} type</div>
-        ) : (
           <div key={`${type}2`}>against Player2's {type} type</div>
+        ) : (
+          <div key={`${type}2`}>against Player1's {type} type</div>
         )
       ) : !this.state.p1Atk ? (
-        <div key={`typeless2`}>against Player1's Typeless</div>
-      ) : (
         <div key={`typeless2`}>against Player2's Typeless</div>
+      ) : (
+        <div key={`typeless2`}>against Player1's Typeless</div>
       )
     );
-    const setP1Atk = () => {
-      this.setState({ p1Atk: true });
-    };
-    const changeP1Atk = () => {
-      p1Atk ? this.setState({ p1Atk: false }) : this.setState({ p1Atk: true });
-    };
+
     const currImage = () => {
       return (
         <img src={p_types} width="500px" height="300px" alt="pokemon types" />
@@ -283,12 +282,7 @@ class App extends React.Component {
     };
     const gameBegin = () => {
       if (gameStart) {
-        return (
-          <div>
-            {displayOutput()}
-            {setP1Atk()}
-          </div>
-        );
+        return <div>{displayOutput()}</div>;
       } else {
         return <div>Press 'Start' to start the game.</div>;
       }
@@ -310,7 +304,7 @@ class App extends React.Component {
           {console.log(`${p1Atk}+0`)}
           {currAtkElems}
           {currDefElems}
-          {changeP1Atk()}
+
           {console.log(`${p1Atk}+1`)}
           {gameBegin()}
 
