@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { makeShuffledDeck } from "./utils.js";
+import { makeDeck, makeShuffledDeck } from "./utils.js";
 import p_types from "./images/pokemon_type.png";
 
 class App extends React.Component {
@@ -11,7 +11,7 @@ class App extends React.Component {
       //Start game
       gameStart: false,
       // Set default value of card deck to new shuffled deck
-      cardDeck: makeShuffledDeck(),
+      cardDeck: makeDeck(),
       cardDeck2: makeShuffledDeck(),
       // currCards holds the cards from the current round
       currAtk: [],
@@ -23,7 +23,7 @@ class App extends React.Component {
       // State to track the score of each player
       scoreboard: [0, 0],
       //Switch attack and defend
-      p1Atk: false,
+      p1Atk: null,
       roundNum: 0,
     };
   }
@@ -33,7 +33,8 @@ class App extends React.Component {
     let i = atk[0].index;
     let j = def[0].index;
     let res = this.typeMatchUpChart[i][j];
-
+    const { p1Atk } = this.state;
+    console.log(`${p1Atk}+4`);
     switch (res) {
       case 4:
         this.updateScore(1);
@@ -56,7 +57,7 @@ class App extends React.Component {
     const { scoreboard } = this.state;
     //const {currWinner} = this.state;
     const { p1Atk } = this.state;
-
+    console.log(`${p1Atk}+5`);
     if (p1Atk === true) {
       if (n === 1) {
         scoreboard[0] += 2;
@@ -87,17 +88,60 @@ class App extends React.Component {
     this.setState({ scoreboard });
   };
 
+  dealType = () => {
+    const { p1Atk } = this.state;
+    console.log(`${p1Atk}+2`);
+    this.rN++;
+    //Pops a specific card from deck
+    if (this.state.cardDeck !== []) {
+      const newP1Card = this.state.cardDeck.splice(18, 1);
+      const newP2Card = [this.state.cardDeck2.pop()];
+
+      p1Atk
+        ? this.setState(
+            {
+              currAtk: newP1Card,
+              currDef: newP2Card,
+              roundNum: this.rN,
+            },
+            () => {
+              // Call determineWinner after the state has been updated
+
+              this.determineWinner(newP1Card, newP2Card);
+            }
+          )
+        : this.setState(
+            {
+              currAtk: newP2Card,
+              currDef: newP1Card,
+              roundNum: this.rN,
+            },
+            () => {
+              // Call determineWinner after the state has been updated
+
+              this.determineWinner(newP2Card, newP1Card);
+            }
+          );
+      console.log(`${p1Atk}+3`);
+    } else {
+      return (
+        <p>
+          The deck is out of cards. Please click 'restart to restart the game.
+        </p>
+      );
+    }
+  };
+
   dealCards = () => {
     this.changeAtkDef();
-
+    const { p1Atk } = this.state;
     this.rN++;
     // this.state.cardDeck.pop() modifies this.state.cardDeck array
     if (this.state.cardDeck !== []) {
       const newP1Card = [this.state.cardDeck.pop()];
       const newP2Card = [this.state.cardDeck2.pop()];
-      const adState = this.state.p1Atk;
 
-      adState
+      p1Atk
         ? this.setState(
             {
               currAtk: newP1Card,
@@ -134,6 +178,7 @@ class App extends React.Component {
     this.setState({ gameStart: true });
   };
   restartGame = () => {
+    this.rN = 0;
     this.setState({
       cardDeck: makeShuffledDeck(),
       cardDeck2: makeShuffledDeck(),
@@ -141,24 +186,13 @@ class App extends React.Component {
       currDef: [],
       currWinner: null,
       scoreboard: [0, 0],
-      p1Atk: false,
+      p1Atk: null,
       roundNum: 0,
       gameStart: false,
     });
   };
-  changeAtkDef = () => {
-    const adState = this.state.p1Atk;
+  
 
-    adState ? this.setState({ p1Atk: false }) : this.setState({ p1Atk: true });
-  };
-
-  displayImages = (card) => {
-    return (
-      <div>
-        <img src={card.src} alt="pokemon types" />
-      </div>
-    );
-  };
   typeMatchUpChart = [
     /*typeless, Normal","Fighting","Psychic","Dark","Ghost","Bug","Dragon",
      "Flying","Fairy","Rock","Ground","Steel","Poison","Grass","Water","Ice",
@@ -216,9 +250,15 @@ class App extends React.Component {
         <div key={`typeless2`}>against Player2's Typeless</div>
       )
     );
+    const setP1Atk = () => {
+      this.setState({ p1Atk: true });
+    };
+    const changeP1Atk = () => {
+      p1Atk ? this.setState({ p1Atk: false }) : this.setState({ p1Atk: true });
+    };
     const currImage = () => {
       return (
-        <img src={p_types} width="500px" height="300px" alt="pokemon type" />
+        <img src={p_types} width="500px" height="300px" alt="pokemon types" />
       );
     };
 
@@ -242,9 +282,13 @@ class App extends React.Component {
       }
     };
     const gameBegin = () => {
-      console.log(gameStart);
       if (gameStart) {
-        return <div>{displayOutput()}</div>;
+        return (
+          <div>
+            {displayOutput()}
+            {setP1Atk()}
+          </div>
+        );
       } else {
         return <div>Press 'Start' to start the game.</div>;
       }
@@ -261,9 +305,13 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           {currImage()}
+
           <h3>Pokemon Type match-up Card game🚀</h3>
+          {console.log(`${p1Atk}+0`)}
           {currAtkElems}
           {currDefElems}
+          {changeP1Atk()}
+          {console.log(`${p1Atk}+1`)}
           {gameBegin()}
 
           {cardDeck.length === 0 ? (
@@ -273,9 +321,9 @@ class App extends React.Component {
             </div>
           ) : gameStart ? (
             <div>
-            <button onClick={this.dealCards}>Deal</button>
-            <button onClick={this.dealCards}>Fire</button>
-            <button onClick={this.dealCards}>Electric</button>
+              <button onClick={this.dealCards}>Deal</button>
+              <button onClick={this.dealType}>Fire</button>
+              <button onClick={this.dealType}>Electric</button>
             </div>
           ) : (
             <button onClick={this.startGame}>Start</button>
