@@ -1,37 +1,31 @@
 import React from "react";
 import "./Keyboard.css";
 
+
 class Keyboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       buttons: [
-        "q",
-        "w",
-        "e",
-        "r",
-        "t",
-        "y",
-        "u",
-        "i",
-        "o",
-        "p",
-        "a",
-        "s",
-        "d",
-        "f",
-        "g",
-        "h",
-        "j",
-        "k",
-        "l",
-        "z",
-        "x",
-        "c",
-        "v",
-        "b",
-        "n",
-        "m",
+        "Typeless",
+        "Normal",
+        "Fighting",
+        "Psychic",
+        "Dark",
+        "Ghost",
+        "Bug",
+        "Dragon",
+        "Flying",
+        "Fairy",
+        "Rock",
+        "Ground",
+        "Steel",
+        "Poison",
+        "Grass",
+        "Water",
+        "Ice",
+        "Electric",
+        "Fire",
       ],
       clickedKeys: [],
     };
@@ -74,7 +68,7 @@ class Keyboard extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.clickedKeys);
+    //console.log(this.state.clickedKeys);
   }
 
   render() {

@@ -3,7 +3,29 @@ import "./App.css";
 import { makeDeck, makeShuffledDeck } from "./utils.js";
 import p_types from "./images/pokemon_type.png";
 import DisplayType from "./displayType";
+import Keyboard from "./keyboard/Keyboard";
 
+const pTypes = [
+  "Typeless",
+  "Normal",
+  "Fighting",
+  "Psychic",
+  "Dark",
+  "Ghost",
+  "Bug",
+  "Dragon",
+  "Flying",
+  "Fairy",
+  "Rock",
+  "Ground",
+  "Steel",
+  "Poison",
+  "Grass",
+  "Water",
+  "Ice",
+  "Electric",
+  "Fire",
+]
 class App extends React.Component {
   constructor(props) {
     // Always call super with props in constructor to initialise parent class
@@ -89,76 +111,25 @@ class App extends React.Component {
     this.changeP1Atk();
   };
 
-  dealTypeless = () => {
-    this.dealType(0);
-  };
-  dealNormal = () => {
-    this.dealType(1);
-  };
-  dealFighting = () => {
-    this.dealType(2);
-  };
-  dealDark = () => {
-    this.dealType(4);
-  };
-  dealPsychic = () => {
-    this.dealType(3);
-  };
-  dealGhost = () => {
-    this.dealType(5);
-  };
-  dealBug = () => {
-    this.dealType(6);
-  };
-  dealDragon = () => {
-    this.dealType(7);
-  };
-  dealFlying = () => {
-    this.dealType(8);
-  };
-  dealFairy = () => {
-    this.dealType(9);
-  };
-  dealRock = () => {
-    this.dealType(10);
-  };
-  dealGround = () => {
-    this.dealType(11);
-  };
-  dealSteel= () => {
-    this.dealType(12);
-  };
-  dealPoison = () => {
-    this.dealType(13);
-  };
-  dealGrass = () => {
-    this.dealType(14);
-  };
-  dealWater = () => {
-    this.dealType(15);
-  };
-  dealFire = () => {
-    this.dealType(18);
-  };
-  dealElectric = () => {
-    this.dealType(17);
-  };
-  dealIce= () => {
-    this.dealType(16);
-  };
-
-  dealType = (type) => {
-    const { p1Atk } = this.state;
+  dealType = (type_played) => {
+    const { p1Atk, cardDeck } = this.state;
 
     this.rN++;
     //Pops a specific card from deck
     if (this.state.cardDeck !== []) {
-      const newP1Card = this.state.cardDeck.splice(type, 1);
+      const num = pTypes.indexOf(type_played);
+      const pType ={
+        index: num,
+        type: type_played,
+      }
+      let newP1Card = [];
+      newP1Card.push( pType);
       const newP2Card = [this.state.cardDeck2.pop()];
-
+      console.log(newP1Card);
       p1Atk
         ? this.setState(
             {
+              cardDeck: cardDeck.filter((p_type) => p_type !== pType),
               currAtk: newP1Card,
               currDef: newP2Card,
               roundNum: this.rN,
@@ -211,7 +182,9 @@ class App extends React.Component {
     const { p1Atk } = this.state;
     p1Atk ? this.setState({ p1Atk: false }) : this.setState({ p1Atk: true });
   };
-
+  handleInput = (input) => {
+    console.log(input);
+  };
   typeMatchUpChart = [
     /*typeless, Normal","Fighting","Psychic","Dark","Ghost","Bug","Dragon",
      "Flying","Fairy","Rock","Ground","Steel","Poison","Grass","Water","Ice",
@@ -330,25 +303,7 @@ class App extends React.Component {
           ) : gameStart ? (
             <div>
               {<DisplayType cardDeck={cardDeck} />}
-              <button onClick={this.dealTypeless}>Typeless</button>
-              <button onClick={this.dealNormal}>Normal</button>
-              <button onClick={this.dealFighting}>Fighting</button>
-              <button onClick={this.dealPsychic}>Psychic</button>
-              <button onClick={this.dealDark}>Dark</button>
-              <button onClick={this.dealGhost}>Ghost</button>
-              <button onClick={this.dealBug}>Bug</button>
-              <button onClick={this.dealDragon}>Dragon</button>
-              <button onClick={this.dealFlying}>Flying</button>
-              <button onClick={this.dealFairy}>Fairy</button>
-              <button onClick={this.dealRock}>Rock</button>
-              <button onClick={this.dealGround}>Ground</button>
-              <button onClick={this.dealSteel}>Steel</button>
-              <button onClick={this.dealPoison}>Poison</button>
-              <button onClick={this.dealGrass}>Grass</button>
-              <button onClick={this.dealWater}>Water</button>
-              <button onClick={this.dealIce}>Ice</button>
-              <button onClick={this.dealFire}>Fire</button>
-              <button onClick={this.dealElectric}>Electric</button>
+              {<Keyboard onClick={this.dealType} />}
             </div>
           ) : (
             <button onClick={this.startGame}>Start</button>
