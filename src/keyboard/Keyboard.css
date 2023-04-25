@@ -1,0 +1,44 @@
+.keyboard {
+  background-color: #282c34;
+  color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0px;
+  margin: 0 auto;
+  max-width: 375px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.keyboard button {
+  background-color: #fff;
+  border: none;
+  border-radius: 5px;
+  color: #333;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 2.5px;
+  padding: 3px;
+  height: 45px;
+  width: 36px;
+}
+
+.keyboard button:hover {
+  background-color: lightgoldenrodyellow;
+}
+
+button:disabled {
+  background-color: #bcbcbc;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media (max-width: 375px) {
+  button {
+    font-size: 18px;
+  }
+}
