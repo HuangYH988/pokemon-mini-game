@@ -1,5 +1,6 @@
 import React from "react";
 import "./Keyboard.css";
+import DisplayType from "./../displayType";
 
 
 class Keyboard extends React.Component {
@@ -73,9 +74,9 @@ class Keyboard extends React.Component {
 
   render() {
     const { buttons, clickedKeys } = this.state;
-    const firstRow = buttons.slice(0, 10);
-    const secondRow = buttons.slice(10, 19);
-    const thirdRow = buttons.slice(19);
+    const firstRow = buttons.slice(0, 7);
+    const secondRow = buttons.slice(7, 14);
+    const thirdRow = buttons.slice(14);
 
     return (
       <div className="keyboard">
@@ -89,7 +90,7 @@ class Keyboard extends React.Component {
                 this[key] = button;
               }}
             >
-              {key}
+              <DisplayType type={key} />
             </button>
           ))}
         </div>
@@ -103,7 +104,7 @@ class Keyboard extends React.Component {
                 this[key] = button;
               }}
             >
-              {key}
+              <DisplayType type={key} />
             </button>
           ))}
         </div>
@@ -117,7 +118,7 @@ class Keyboard extends React.Component {
                 this[key] = button;
               }}
             >
-              {key}
+              <DisplayType type={key} />
             </button>
           ))}
         </div>
