@@ -25,7 +25,7 @@ const pTypes = [
   "Ice",
   "Electric",
   "Fire",
-]
+];
 class App extends React.Component {
   constructor(props) {
     // Always call super with props in constructor to initialise parent class
@@ -111,26 +111,37 @@ class App extends React.Component {
     this.changeP1Atk();
   };
 
-  dealType = (type_played) => {
+  dealType = (typePlayed) => {
     const { p1Atk, cardDeck } = this.state;
 
     this.rN++;
     //Pops a specific card from deck
     if (this.state.cardDeck !== []) {
-      const num = pTypes.indexOf(type_played);
-      const pType ={
+      const num = pTypes.indexOf(typePlayed);
+      let type_played;
+      //console.log(typePlayed);
+      if (typePlayed === "Typeless") {
+        type_played = null;
+      } else {
+        type_played = typePlayed;
+      }
+      const pType = {
         index: num,
         type: type_played,
-      }
+      };
+
       let newP1Card = [];
-      newP1Card.push( pType);
+      newP1Card.push(pType);
       const newP2Card = [this.state.cardDeck2.pop()];
-      console.log(cardDeck)
-      console.log(cardDeck.splice(num,0))
+
+      console.log(cardDeck.filter((p_type) => p_type.type !== type_played));
       p1Atk
         ? this.setState(
             {
-              
+              cardDeck: cardDeck.filter(
+                (p_type) => p_type.type !== type_played
+              ),
+
               currAtk: newP1Card,
               currDef: newP2Card,
               roundNum: this.rN,
@@ -143,6 +154,9 @@ class App extends React.Component {
           )
         : this.setState(
             {
+              cardDeck: cardDeck.filter(
+                (p_type) => p_type.type !== type_played
+              ),
               currAtk: newP2Card,
               currDef: newP1Card,
               roundNum: this.rN,
