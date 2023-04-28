@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { makeDeck, makeShuffledDeck } from "./utils.js";
 import p_types from "./images/pokemon_type.png";
-import DisplayType from "./displayType";
+//import DisplayType from "./displayType";
 import Keyboard from "./keyboard/Keyboard";
 
 const pTypes = [
@@ -125,11 +125,12 @@ class App extends React.Component {
       let newP1Card = [];
       newP1Card.push( pType);
       const newP2Card = [this.state.cardDeck2.pop()];
-      console.log(newP1Card);
+      console.log(cardDeck)
+      console.log(cardDeck.splice(num,0))
       p1Atk
         ? this.setState(
             {
-              cardDeck: cardDeck.filter((p_type) => p_type !== pType),
+              
               currAtk: newP1Card,
               currDef: newP2Card,
               roundNum: this.rN,
@@ -182,9 +183,9 @@ class App extends React.Component {
     const { p1Atk } = this.state;
     p1Atk ? this.setState({ p1Atk: false }) : this.setState({ p1Atk: true });
   };
-  handleInput = (input) => {
-    console.log(input);
-  };
+  // handleInput = (input) => {
+  //   console.log(input);
+  // };
   typeMatchUpChart = [
     /*typeless, Normal","Fighting","Psychic","Dark","Ghost","Bug","Dragon",
      "Flying","Fairy","Rock","Ground","Steel","Poison","Grass","Water","Ice",
@@ -302,7 +303,7 @@ class App extends React.Component {
             </div>
           ) : gameStart ? (
             <div>
-              {<DisplayType cardDeck={cardDeck} />}
+              {/* {<DisplayType cardDeck={cardDeck} />} */}
               {<Keyboard onClick={this.dealType} />}
             </div>
           ) : (
@@ -311,7 +312,7 @@ class App extends React.Component {
           <br />
           <br />
           {cardDeck.length === 0 ? <br /> : <p>Reset the game:</p>}
-
+            
           <button onClick={this.restartGame}>Restart</button>
         </header>
       </div>
