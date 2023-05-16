@@ -1,7 +1,6 @@
 import React from "react";
 import "./Keyboard.css";
-import DisplayType from "./../displayType";
-
+import DisplayType from "../displayType";
 
 class Keyboard extends React.Component {
   constructor(props) {
@@ -91,6 +90,7 @@ class Keyboard extends React.Component {
               }}
             >
               <DisplayType type={key} />
+              {key}
             </button>
           ))}
         </div>
@@ -104,7 +104,7 @@ class Keyboard extends React.Component {
                 this[key] = button;
               }}
             >
-              <DisplayType type={key} />
+              {key}
             </button>
           ))}
         </div>
@@ -118,7 +118,7 @@ class Keyboard extends React.Component {
                 this[key] = button;
               }}
             >
-              <DisplayType type={key} />
+              {key}
             </button>
           ))}
         </div>

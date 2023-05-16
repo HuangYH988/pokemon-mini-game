@@ -135,7 +135,7 @@ class App extends React.Component {
       newP1Card.push(pType);
       const newP2Card = [this.state.cardDeck2.pop()];
 
-      console.log(cardDeck.filter((p_type) => p_type.type !== type_played));
+      console.log(typePlayed);
       p1Atk
         ? this.setState(
             {
