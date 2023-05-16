@@ -15,7 +15,7 @@
 }
 
 .keyboard button {
-  background-color: #fff;
+  /*background-color: #fff;*/
   border: none;
   border-radius: 5px;
   color: #333;
@@ -41,4 +41,81 @@ button:disabled {
   button {
     font-size: 18px;
   }
+}
+
+#Ice{
+  background-image: url("./../images/Ice.png");
+  background-size: 80px 30px;
+}
+#Typeless{
+  background-image: url("./../images/Typeless.png");
+  background-size: 80px 30px;
+}
+#Fire{
+  background-image: url("./../images/Fire.png");
+  background-size: 80px 30px;
+}
+#Electric{
+  background-image: url("./../images/Electric.png");
+  background-size: 80px 30px;
+}
+#Normal{
+  background-image: url("./../images/Normal.png");
+  background-size: 80px 30px;
+}
+#Fighting{
+  background-image: url("./../images/Fighting.png");
+  background-size: 80px 30px;
+}
+#Psychic{
+  background-image: url("./../images/Psychic.png");
+  background-size: 80px 30px;
+}
+#Dark{
+  background-image: url("./../images/Dark.png");
+  background-size: 80px 30px;
+}
+#Ghost{
+  background-image: url("./../images/Ghost.png");
+  background-size: 80px 30px;
+}
+#Bug{
+  background-image: url("./../images/Bug.png");
+  background-size: 80px 30px;
+}
+#Dragon{
+  background-image: url("./../images/Dragon.png");
+  background-size: 80px 30px;
+}
+#Flying{
+  background-image: url("./../images/Flying.png");
+  background-size: 80px 30px;
+}
+#Fairy{
+  background-image: url("./../images/Fairy.png");
+  background-size: 80px 30px;
+}
+#Rock{
+  background-image: url("./../images/Rock.png");
+  background-size: 80px 30px;
+}
+#Ground{
+  background-image: url("./../images/Ground.png");
+  background-size: 80px 30px;
+}
+#Steel{
+  background-image: url("./../images/Steel.png");
+  background-size: 80px 30px;
+}
+#Poison{
+  background-image: url("./../images/Poison.png");
+  background-size: 80px 30px;
+}
+#Grass{
+  background-image: url("./../images/Grass.png");
+  background-size: 80px 30px;
+}
+#Water{
+  background-image: url("./../images/Water.png");
+  background-size: 80px 30px;
 }

@@ -114,7 +114,8 @@ class App extends React.Component {
 
   dealType = (typePlayed) => {
     const { p1Atk, cardDeck } = this.state;
-
+    document.getElementById(typePlayed).style.backgroundImage="none";
+    document.getElementById(typePlayed).style.backgroundColor="white";
     this.rN++;
     //Pops a specific card from deck
     if (this.state.cardDeck !== []) {

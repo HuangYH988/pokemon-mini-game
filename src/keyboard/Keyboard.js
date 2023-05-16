@@ -1,6 +1,6 @@
 import React from "react";
 import "./Keyboard.css";
-import DisplayType from "../displayType";
+
 
 class Keyboard extends React.Component {
   constructor(props) {
@@ -82,6 +82,7 @@ class Keyboard extends React.Component {
         <div className="row">
           {firstRow.map((key) => (
             <button
+            id = {`${key}`}
               value={key}
               onClick={this.handleClick}
               disabled={clickedKeys.includes(key)}
@@ -89,14 +90,15 @@ class Keyboard extends React.Component {
                 this[key] = button;
               }}
             >
-              <DisplayType type={key} />
-              {key}
+              
+              
             </button>
           ))}
         </div>
         <div className="row">
           {secondRow.map((key) => (
             <button
+            id = {`${key}`}
               value={key}
               onClick={this.handleClick}
               disabled={clickedKeys.includes(key)}
@@ -104,7 +106,7 @@ class Keyboard extends React.Component {
                 this[key] = button;
               }}
             >
-              {key}
+              
             </button>
           ))}
         </div>
@@ -112,13 +114,14 @@ class Keyboard extends React.Component {
           {thirdRow.map((key) => (
             <button
               value={key}
+              id = {`${key}`}
               onClick={this.handleClick}
               disabled={clickedKeys.includes(key)}
               ref={(button) => {
                 this[key] = button;
               }}
             >
-              {key}
+              
             </button>
           ))}
         </div>
